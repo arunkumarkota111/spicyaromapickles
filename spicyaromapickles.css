@@ -1,48 +1,69 @@
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap');
 
-
 .logo {
-    background-image: radial-gradient(#fff8db, #fae38c);
-    padding: 10px;
+    background-color: #fffaf0;
+    padding: 8px 15px;
     font-weight: bold;
     color: #183b56;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    flex-shrink: 0;
 }
 
-.purchase-controls {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+/* Hero Section Styling */
+.hero-section {
+    background: transparent !important;
+    box-shadow: none !important;
+    /* Remove shadows to keep it seamless */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* Optional: thin line to define header space */
+    position: relative;
+    top: 0;
+    z-index: 1000;
+    padding: 80px 20px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    /* Adds breathing room below the fixed logo */
 }
 
-.purchase-controls select {
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+.hero-section h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #d35400;
+    /* Spicy Orange */
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.add-btn {
-    background: #e67e22;
-    /* Spicy Orange color */
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s;
+.hero-section p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    color: #5a7184;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
-.add-btn:hover {
-    background: #d35400;
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 50px 15px;
+    }
+
+    .hero-section h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
+    }
 }
 
 .imagesize {
     height: 300px;
     width: 300px;
     border-radius: 5px;
-
 }
 
 .cart-item {
@@ -52,7 +73,407 @@
     justify-content: space-between;
 }
 
-/* Your provided CSS */
+.purchase-controls select {
+    width: 100%;
+    /* Fills the entire length of the card */
+    padding: 12px 12px;
+    /* Space inside the box */
+    font-size: 16px;
+    font-weight: 700;
+    color: #183b56 !important;
+    background-color: #f6e1fa !important;
+    border: 2px solid #d35400;
+    border-radius: 8px;
+    /* FIXING TEXT WIDTH & SPACING */
+    letter-spacing: 0.5px;
+    /* Adds slight space between letters for clarity */
+    text-align: center;
+    /* Centers the text within the box length */
+    display: block;
+    box-sizing: border-box;
+    /* Ensures padding doesn't push the box out of bounds */
+}
+
+.purchase-controls label {
+    width: 100%;
+    text-align: left;
+    /* Keeps the 'Select Weight' label aligned to the left */
+    display: block;
+    margin-bottom: 5px;
+}
+
+.purchase-controls select:focus {
+    border-color: #d35400;
+    /* Spicy Orange */
+    box-shadow: 0 0 5px rgba(211, 84, 0, 0.2);
+}
+
+.add-btn {
+    margin-top: 10px;
+    background-image: linear-gradient(to right, #d35400, #e67e22);
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    transition: transform 0.2s, background 0.3s;
+}
+
+
+.add-btn:hover {
+    background-image: linear-gradient(to right, #e67e22, #d35400);
+    transform: scale(1.02);
+}
+
+.add-btn:active {
+    transform: scale(0.98);
+}
+
+.added-msg {
+    display: none;
+    /* Hidden by default */
+    color: #28a745;
+    /* Success Green */
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.purchase-controls select {
+    font-size: 15px;
+    /* Slightly smaller to fit the full text */
+    padding-right: 30px;
+    /* Space for the arrow */
+}
+
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background:
+        radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+        radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+}
+
+header {
+    position: fixed;
+    /* Pins the header to the screen */
+    top: 0;
+    /* Aligns it to the very top */
+    left: 0;
+    width: 100%;
+    height: 80px;
+    /* Ensures it spans the full width */
+    /* Layering */
+    z-index: 3000;
+    /* Keeps it above all products and sections */
+    /* Background */
+    background: transparent !important;
+    /* Since you wanted a seamless body background */
+    color: white;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main {
+    padding-top: 20px;
+    /* Adjust this based on your header height */
+}
+
+#product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 40px 5%;
+}
+
+.product-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Targets the Pickle Names in the product cards */
+.product-card h2,
+.product-card h3 {
+    font-size: 22px;
+    /* Change this number to make it bigger or smaller */
+    font-weight: 700;
+    /* 700 is bold, 400 is normal */
+    color: #183b56;
+    /* Your theme color */
+    margin-top: 15px;
+    /* Space above the name */
+    margin-bottom: 10px;
+    /* Space below the name */
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.2;
+    /* Prevents lines from overlapping if the name is long */
+}
+
+.product-card h3 {
+    margin: 10px 0;
+}
+
+/* Smaller font for mobile screens */
+
+@media (max-width: 600px) {
+
+    .product-card h2,
+    .product-card h3 {
+        font-size: 18px;
+    }
+}
+
+.add-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sidebar {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 350px;
+    height: 100%;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    padding: 20px;
+    z-index: 100;
+}
+
+.sidebar.active {
+    right: 0;
+}
+
+.cart-icon {
+    color: #ffffff !important;
+    /* Makes the icon white */
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 3001;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+#cart-sidebar {
+    /* ... your existing code (position, right, etc.) ... */
+    max-height: 100vh;
+    /* Ensures the sidebar is never taller than the screen */
+    overflow-y: auto;
+    /* Adds a scrollbar ONLY if items go off-screen */
+    display: flex;
+    /* Helps organize the internal layout */
+    flex-direction: column;
+    z-index: 3000;
+    /* Higher than the header's 2000 */
+}
+
+#cart-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+#cart-sidebar::-webkit-scrollbar-thumb {
+    background: #d35400;
+    border-radius: 10px;
+}
+
+/* Fix the cart badge color */
+#cart-count {
+    background-color: #d35400;
+    /* Spicy orange badge */
+    color: white;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #25D366 !important;
+    color: white !important;
+    ;
+    border: none;
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.checkout-btn:hover {
+    background-color: #128C7E !important;
+    transform: translateY(-2px);
+}
+
+.checkout-btn:active {
+    transform: scale(0.98);
+}
+
+
+.btn-outline-secondary {
+    border: 2px solid #5a7184;
+    color: #5a7184;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #5a7184;
+    color: white;
+    text-decoration: none;
+}
+
+.close-btn {
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: #183b56;
+    cursor: pointer;
+}
+
+.whatsapp-notice {
+    background-color: #e8f5e9;
+    /* Light green background */
+    border-left: 4px solid #25D366;
+    /* WhatsApp green accent */
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: #2e7d32;
+    /* Dark green text */
+    line-height: 1.4;
+}
+
+.whatsapp-notice i {
+    font-size: 18px;
+    margin-top: 2px;
+    color: #25D366;
+}
+
+#backToTop {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    z-index: 999;
+    display: none;
+    /* We can show this with JS when user scrolls */
+}
+
+
+
+
+
+
+
+
+/* contact section */
+.contact-card {
+    transition: transform 0.3s ease;
+    border: none;
+}
+
+.contact-card:hover {
+    transform: translateY(-10px);
+    /* Lifts the card up slightly on hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.contact-icon {
+    margin-bottom: 10px;
+}
+
+#contactSection {
+    background-color: transparent !important;
+    /* The Spicy Yellow color */
+    position: relative;
+    z-index: 10;
+    /* Ensures it sits on top of the body background */
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 100%;
+    display: block;
+    color: #183b56;
+    /* Dark text for readability on yellow */
+}
+
+#contactSection h1 {
+    color: #183b56 !important;
+}
+
+.contact-card {
+    background-color: #ffffff !important;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    color: #183b56 !important;
+}
+
+
+/* thank you section */
+
 .thanking-customers-section {
     background-image: radial-gradient(#fff8db, #fae38c);
 }
@@ -80,6 +501,8 @@
     cursor: pointer;
     /* Added for better UX */
 }
+
+/* follow us section */
 
 .follow-us-section {
     background-color: white;
@@ -115,95 +538,14 @@
     /* Nice hover effect */
 }
 
-
-
-body {
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    background: #f4f4f4;
+.followus-icon-styling {
+    transition: transform 0.3s ease;
+    /* Smooth animation */
 }
 
-header {
-    background: #333;
-    color: white;
-    padding: 1rem 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-}
-
-.cart-icon {
-    cursor: pointer;
-    font-size: 1.2rem;
-}
-
-#product-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 40px 5%;
-}
-
-.product-card {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.product-card img {
-    max-width: 100%;
-    height: 180px;
-    object-fit: contain;
-}
-
-.product-card h3 {
-    margin: 10px 0;
-}
-
-.add-btn {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.sidebar {
-    position: fixed;
-    right: -400px;
-    top: 0;
-    width: 350px;
-    height: 100%;
-    background: white;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-    padding: 20px;
-    z-index: 100;
-}
-
-.sidebar.active {
-    right: 0;
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
-}
-
-.checkout-btn {
-    width: 100%;
-    padding: 15px;
-    background: #007bff;
-    color: white;
-    border: none;
-    margin-top: 20px;
-    cursor: pointer;
+.followus-icon-styling:hover {
+    transform: scale(1.1);
+    /* Makes the circle 10% bigger */
+    background-color: #fdf2d0;
+    /* Optional: change color slightly on hover */
 }
