@@ -1,67 +1,79 @@
-// 1. Products Data
+// 1. Products Data organized by Category
+const categories = {
+    chicken: [{
+            id: 1,
+            name: "Chicken Boneless Pickle",
+            image: "https://sumadhurafoods.com/cdn/shop/files/bone-chicken-pickle.png?v=1732191308",
+            prices: {
+                "100g": 150,
+                "250g": 350,
+                "500g": 700,
+                "1kg": 1400
+            }
+        },
+        {
+            id: 2,
+            name: "Chicken with Bone Pickle",
+            image: "https://foodonfarmpickles.com/cdn/shop/files/chicken-boneless-pickle-1-scaled_1000x.webp?v=1761405307",
+            prices: {
+                "100g": 130,
+                "250g": 300,
+                "500g": 600,
+                "1kg": 1200
+            }
+        },
+        {
+            id: 3,
+            name: "Gongura Chicken Pickle",
+            image: "https://kollipickles.com/wp-content/uploads/2024/06/IMG_0409.jpg",
+            prices: {
+                "100g": 130,
+                "250g": 300,
+                "500g": 600,
+                "1kg": 1200
+            }
+        },
+        {
+            id: 4,
+            name: "Thokku Chicken Pickle",
+            image: "https://www.licious.in/blog/wp-content/uploads/2022/02/chicken-pickle-750x422.jpg",
+            prices: {
+                "100g": 150,
+                "250g": 350,
+                "500g": 700,
+                "1kg": 1400
+            }
+        }
+    ],
+    mutton: [],
+    prawns: [{
+        id: 5,
+        name: "Prawns Pickle",
+        image: "https://pichekkistabobby.com/storage/2025/09/PRAWNS-PICKLE-scaled.jpg",
+        prices: {
+            "100g": 250,
+            "250g": 650,
+            "500g": 1200,
+            "1kg": 2200
+        }
+    }],
+    fish: []
+};
 
-const products = [{
-        id: 1,
-        name: "Chicken Boneless Pickle",
-        basePrice: 150,
-        image: "https://sumadhurafoods.com/cdn/shop/files/bone-chicken-pickle.png?v=1732191308"
-    },
-    {
-        id: 2,
-        name: "Chicken with Bone Pickle",
-        basePrice: 120,
-        image: "https://foodonfarmpickles.com/cdn/shop/files/chicken-boneless-pickle-1-scaled_1000x.webp?v=1761405307"
-    },
-    {
-        id: 3,
-        name: "Gongura Chicken Pickle",
-        basePrice: 130,
-        image: "https://kollipickles.com/wp-content/uploads/2024/06/IMG_0409.jpg"
-    },
-
-    {
-        id: 4,
-        name: "Thokku Chicken Pickle",
-        basePrice: 140,
-        image: "https://www.licious.in/blog/wp-content/uploads/2022/02/chicken-pickle-750x422.jpg"
-    }
-
-];
-
+let currentCategory = 'chicken';
 let cart = [];
-// 2. Helper Functions (UI and Cart Management)
 
+// 2. UI & Cart Helper Functions
 function toggleCart() {
     const sidebar = document.getElementById('cart-sidebar');
     if (sidebar) {
         sidebar.classList.toggle('active');
-
-        // Lock/Unlock background scroll based on sidebar state
-        if (sidebar.classList.contains('active')) {
-            document.body.style.overflow = 'hidden'; // Prevents homepage from scrolling
-        } else {
-            document.body.style.overflow = 'auto'; // Re-enables homepage scroll
-        }
+        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : 'auto';
     }
 }
-// Listen for scrolling to show/hide the "Back to Top" button
-window.onscroll = function() {
-    const topBtn = document.getElementById("backToTop");
-    if (topBtn) {
-        // Show button after scrolling down 200px
-        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-            topBtn.style.display = "block";
-        } else {
-            topBtn.style.display = "none";
-        }
-    }
-};
-
 
 function updateUI() {
-    // Update count in header
     document.getElementById('cart-count').innerText = cart.length;
-    // Update items in sidebar
     const cartItems = document.getElementById('cart-items');
     cartItems.innerHTML = cart.map((item, index) => `
         <div class="cart-item d-flex justify-content-between align-items-center border-bottom py-2">
@@ -74,7 +86,6 @@ function updateUI() {
         </div>
     `).join('');
 
-    // Update total price
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     document.getElementById('total-price').innerText = total;
 }
@@ -84,29 +95,42 @@ function removeFromCart(index) {
     updateUI();
 }
 
-// 3. Main Action Functions
-function displayProducts() {
+// 3. Category & Display Logic
+function filterCategory(categoryName) {
+    currentCategory = categoryName;
+    document.querySelectorAll('.category-filter .btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.innerText.toLowerCase() === categoryName) btn.classList.add('active');
+    });
+    displayProducts(categoryName);
+}
+
+function displayProducts(category = 'chicken') {
     const container = document.getElementById('product-container');
-    container.innerHTML = products.map(product => {
-        // Calculate prices once for the dropdown
-        const p100 = product.basePrice;
-        const p250 = Math.round(product.basePrice * 2.4);
-        const p500 = Math.round(product.basePrice * 4.5);
-        const p1kg = Math.round(product.basePrice * 8.5);
+    const productsToShow = categories[category];
+
+    if (!productsToShow || productsToShow.length === 0) {
+        container.innerHTML = `<h3 class="text-center text-white w-100 py-5">Fresh Batches Coming Soon! 🌶️</h3>`;
+        return;
+    }
+
+    container.innerHTML = productsToShow.map(product => {
+        let optionsHTML = "";
+        for (const [weight, price] of Object.entries(product.prices)) {
+            optionsHTML += `<option value="${weight}" data-price="${price}">${weight} - Rs.${price}</option>`;
+        }
+
         return `
             <div class="product-card">
                 <img src="${product.image}" class="imagesize" alt="${product.name}">
                 <h2>${product.name}</h2>
                 <div class="purchase-controls">
-                    <label>Select Weight & Price:</label>
-                    <select id="weight-${product.id}">
-                        <option value="100g" data-price="${p100}">100 grms : Rs.${p100}/-</option>
-                        <option value="250g" data-price="${p250}">250 grms : Rs.${p250}/-</option>
-                        <option value="500g" data-price="${p500}">500 grms : Rs.${p500}/-</option>
-                        <option value="1kg" data-price="${p1kg}">1 kg : Rs.${p1kg}/-</option>
+                    <label>Choose Quantity:</label>
+                    <select id="weight-${product.id}" class="weight-selector mb-2">
+                        ${optionsHTML}
                     </select>
                     <button class="add-btn w-100" onclick="prepareAddToCart(${product.id})">Add to Cart</button>
-                    <div id="msg-${product.id}" class="added-msg">Added to Cart! ✅</div>
+                    <div id="msg-${product.id}" class="added-msg">Added! ✅</div>
                 </div>
             </div>
         `;
@@ -114,30 +138,31 @@ function displayProducts() {
 }
 
 function prepareAddToCart(productId) {
+    // Look for the product in the CURRENT active category
+    const product = categories[currentCategory].find(p => p.id === productId);
     const weightSelect = document.getElementById(`weight-${productId}`);
     const selectedOption = weightSelect.options[weightSelect.selectedIndex];
-    // Add to cart array
+
+    const selectedWeight = selectedOption.value;
+    const selectedPrice = parseInt(selectedOption.dataset.price);
+
     cart.push({
-        name: products.find(p => p.id === productId).name,
-        weight: selectedOption.value,
-        price: parseInt(selectedOption.dataset.price)
+        name: product.name,
+        weight: selectedWeight,
+        price: selectedPrice
     });
+
     updateUI();
-    // Call the message function
     showConfirmation(productId);
 }
-
-
 
 function showConfirmation(productId) {
     const msg = document.getElementById(`msg-${productId}`);
     if (msg) {
-        msg.style.setProperty('display', 'block', 'important'); // Forces it to show
+        msg.style.display = 'block';
         setTimeout(() => {
-            msg.style.setProperty('display', 'none', 'important'); // Hides it after 2 seconds
+            msg.style.display = 'none';
         }, 2000);
-    } else {
-        console.error("Could not find message div for ID: " + productId);
     }
 }
 
@@ -145,13 +170,72 @@ function processCheckout() {
     if (cart.length === 0) return alert("Your cart is empty!");
     let message = "Hello Spicy Aroma Pickles! 🌶️\nI would like to place an order:\n\n";
     cart.forEach(item => {
-        message += `✅ ${item.name} x quantity x ${item.weight}\n   Price: Rs.${item.price}\n\n`;
+        message += `✅ ${item.name} (${item.weight})\n   Price: Rs.${item.price}\n\n`;
     });
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     message += `Total Amount: Rs. ${total}/-\n\nPlease confirm my order. Thank you!`;
-    const whatsappURL = `https://wa.me/917989872395?text=${encodeURIComponent(message)}`;
-    window.open(whatsappURL, '_blank');
+    window.open(`https://wa.me/917989872395?text=${encodeURIComponent(message)}`, '_blank');
 }
 
-// 4. Initialize the site
-displayProducts();
+// 4. Start the page
+displayProducts('chicken');
+
+
+function handleSearch() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const container = document.getElementById('product-container');
+
+    // If the search bar is empty, just show the current active category
+    if (query === "") {
+        displayProducts(currentCategory);
+        return;
+    }
+
+    // Combine all products from all categories into one big list for searching
+    let allProducts = [];
+    Object.keys(categories).forEach(cat => {
+        allProducts = allProducts.concat(categories[cat].map(p => ({
+            ...p,
+            categoryName: cat
+        })));
+    });
+
+    // Filter products based on search query
+    const filteredResults = allProducts.filter(product =>
+        product.name.toLowerCase().includes(query)
+    );
+
+    // Display the results
+    if (filteredResults.length === 0) {
+        container.innerHTML = `<h3 class="text-center text-white w-100 py-5">No pickles found for "${query}" 🌶️</h3>`;
+    } else {
+        renderFilteredList(filteredResults);
+    }
+}
+
+// Helper function to render search results
+function renderFilteredList(results) {
+    const container = document.getElementById('product-container');
+    container.innerHTML = results.map(product => {
+        let optionsHTML = "";
+        for (const [weight, price] of Object.entries(product.prices)) {
+            optionsHTML += `<option value="${weight}" data-price="${price}">${weight} - Rs.${price}</option>`;
+        }
+
+        return `
+            <div class="product-card">
+                <span class="badge badge-pill badge-warning mb-2">${product.categoryName.toUpperCase()}</span>
+                <img src="${product.image}" class="imagesize" alt="${product.name}">
+                <h2>${product.name}</h2>
+                <div class="purchase-controls">
+                    <label>Choose Quantity:</label>
+                    <select id="weight-${product.id}" class="weight-selector mb-2">
+                        ${optionsHTML}
+                    </select>
+                    <button class="add-btn w-100" onclick="prepareAddToCart(${product.id})">Add to Cart</button>
+                    <div id="msg-${product.id}" class="added-msg">Added! ✅</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}

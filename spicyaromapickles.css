@@ -10,6 +10,75 @@
     flex-shrink: 0;
 }
 
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 80%),
+        radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 80%),
+        radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 80%);
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.search-container {
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+.search-container .form-control {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white !important;
+    border-radius: 0 50px 50px 0;
+    padding: 25px;
+}
+
+.search-container .input-group-text {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px 0 0 50px;
+}
+
+.search-container .form-control::placeholder {
+    color: #cccccc;
+}
+
+.search-container .form-control:focus {
+    box-shadow: 0 0 15px rgba(211, 84, 0, 0.3);
+    border-color: #d35400;
+}
+
+
+header {
+    position: fixed;
+    /* Pins the header to the screen */
+    top: 0;
+    /* Aligns it to the very top */
+    left: 0;
+    width: 100%;
+    height: 80px;
+    /* Ensures it spans the full width */
+    /* Layering */
+    z-index: 3000;
+    /* Keeps it above all products and sections */
+    /* Background */
+    background: transparent !important;
+    /* Since you wanted a seamless body background */
+    color: white;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main {
+    padding-top: 20px;
+    /* Adjust this based on your header height */
+}
+
 /* Hero Section Styling */
 .hero-section {
     background: transparent !important;
@@ -39,7 +108,8 @@
 .hero-section p {
     font-family: 'Roboto', sans-serif;
     font-size: 1.2rem;
-    color: #5a7184;
+    font-style: italic;
+    color: white;
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
@@ -174,41 +244,6 @@
 }
 
 
-body {
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    background:
-        radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
-        radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
-        radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
-}
-
-header {
-    position: fixed;
-    /* Pins the header to the screen */
-    top: 0;
-    /* Aligns it to the very top */
-    left: 0;
-    width: 100%;
-    height: 80px;
-    /* Ensures it spans the full width */
-    /* Layering */
-    z-index: 3000;
-    /* Keeps it above all products and sections */
-    /* Background */
-    background: transparent !important;
-    /* Since you wanted a seamless body background */
-    color: white;
-    padding: 0 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-main {
-    padding-top: 20px;
-    /* Adjust this based on your header height */
-}
 
 #product-container {
     display: grid;
@@ -218,7 +253,7 @@ main {
 }
 
 .product-card {
-    background: white;
+    background: transparent;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -239,7 +274,7 @@ main {
     /* Change this number to make it bigger or smaller */
     font-weight: 700;
     /* 700 is bold, 400 is normal */
-    color: #183b56;
+    color: #dce2e6;
     /* Your theme color */
     margin-top: 15px;
     /* Space above the name */
@@ -422,6 +457,20 @@ main {
     /* We can show this with JS when user scrolls */
 }
 
+.category-filter .btn {
+    border-radius: 20px;
+    font-weight: bold;
+    color: black;
+    border-color: #fae38c;
+    transition: all 0.3s;
+}
+
+.category-filter .btn.active,
+.category-filter .btn:hover {
+    background-color: #d35400 !important;
+    border-color: #d35400 !important;
+    color: white !important;
+}
 
 
 
@@ -464,11 +513,11 @@ main {
 }
 
 .contact-card {
-    background-color: #ffffff !important;
+    background-color: transparent !important;
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    color: #183b56 !important;
+    color: white !important;
 }
 
 
@@ -503,10 +552,6 @@ main {
 }
 
 /* follow us section */
-
-.follow-us-section {
-    background-color: white;
-}
 
 .follow-us-section-heading {
     font-family: "Roboto";
